@@ -20,21 +20,23 @@ st.set_page_config(
 )
 
 # ===========================
-# 🎨 CUSTOM STYLING
+# 🎨 CUSTOM STYLING (Fixed for Readability)
 # ===========================
 st.markdown("""
 <style>
-/* Background gradient */
+/* App background (black-blue gradient) */
 .stApp {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 100%);
+    background: linear-gradient(135deg, #000000 0%, #0a0a23 100%);
     font-family: 'Segoe UI', sans-serif;
+    color: #111111;
 }
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background-color: #0a0a23;
-    color: white;
+    background-color: #111122;
+    color: #ffffff;
     padding-top: 2rem;
+    border-right: 1px solid rgba(255,255,255,0.1);
 }
 section[data-testid="stSidebar"] h2 {
     color: #ffffff;
@@ -42,43 +44,66 @@ section[data-testid="stSidebar"] h2 {
 
 /* Headings */
 h1, h2, h3 {
-    color: #0a0a23;
+    color: #ffffff;
     font-weight: 700;
+}
+
+/* Subtext / paragraphs */
+p, label, .stMarkdown, .stText, div, span {
+    color: #111111;
+}
+
+/* Card containers */
+div[data-testid="stVerticalBlock"] {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+    margin-top: 1.5rem;
 }
 
 /* Buttons */
 .stButton>button {
     background-color: #0a0a23;
-    color: white;
+    color: #ffffff;
     border-radius: 10px;
     font-weight: 600;
     transition: 0.2s;
-    padding: 0.6rem 1.4rem;
+    padding: 0.7rem 1.5rem;
+    border: none;
 }
 .stButton>button:hover {
-    background-color: #1c1c4a;
+    background-color: #1b1b4a;
     transform: scale(1.03);
 }
 
-/* Card-like containers */
-div[data-testid="stVerticalBlock"] {
-    background: rgba(255,255,255,0.9);
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    margin-top: 1rem;
-}
-
-/* Scrollable text box */
+/* Text area */
 textarea {
-    border-radius: 10px;
-    border: 1px solid #ccc;
+    border-radius: 10px !important;
+    border: 1px solid #444;
+    background-color: #f9f9f9;
+    color: #000 !important;
 }
 
-/* Info boxes */
+/* Alerts */
 .stAlert {
     border-radius: 10px;
+    font-size: 0.95rem;
 }
+
+/* Info boxes and text contrast */
+.stExpander {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+}
+
+/* Sidebar tip text */
+.stSidebar .stMarkdown, .stSidebar p, .stSidebar div {
+    color: #e0e0e0 !important;
+}
+
+/* Footer and Streamlit menu */
+#MainMenu, footer, header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -95,8 +120,8 @@ st.sidebar.caption("Made with ❤️ by HireSight")
 # ===========================
 # 🧩 HEADER
 # ===========================
-st.title("🤖 HireSight CV Analyzer (Groq-Powered)")
-st.markdown("### Upload your CV and receive instant AI feedback for your job readiness.")
+st.markdown("<h1 style='text-align:center;'>🤖 HireSight CV Analyzer (Groq-Powered)</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align:center; color:#cccccc;'>Upload your CV and receive instant AI feedback for your job readiness.</h3>", unsafe_allow_html=True)
 
 # ===========================
 # 🔍 API CHECK
@@ -108,7 +133,7 @@ if not api_key:
 client = Groq(api_key=api_key)
 
 # ===========================
-# 📤 CV UPLOAD
+# 📤 CV UPLOAD SECTION
 # ===========================
 col1, col2 = st.columns([1.2, 2])
 
@@ -119,9 +144,9 @@ with col1:
 with col2:
     st.subheader("🧠 About This Tool")
     st.markdown("""
-    - Extracts and reads your CV text using AI
-    - Evaluates your **strengths and weaknesses**
-    - Suggests **improvements**
+    - Extracts and reads your CV text using AI  
+    - Evaluates your **strengths and weaknesses**  
+    - Suggests **improvements**  
     - Gives you a **suitability score out of 10**
     """)
 
@@ -173,7 +198,7 @@ if uploaded_file is not None:
 
                     st.subheader("🧾 AI Evaluation Report")
                     st.markdown("---")
-                    st.markdown(answer.replace("**", ""), unsafe_allow_html=True)
+                    st.markdown(f"<div style='color:#111111;'>{answer.replace('**', '')}</div>", unsafe_allow_html=True)
                     st.markdown("---")
 
                     st.success("✅ Analysis complete!")
