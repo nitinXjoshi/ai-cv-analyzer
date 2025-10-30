@@ -24,25 +24,32 @@ st.set_page_config(
 # ===========================
 st.markdown("""
 <style>
-/* Global font and layout */
-html, body, [class*="st-"] {
-    font-family: "Inter", "Segoe UI", sans-serif;
-    color: #111111 !important;
-    background-color: #ffffff !important;
+/* Force Light Mode */
+:root, html, body, [class*="st-"] {
+    --background-color: #ffffff !important;
+    --text-color: #111111 !important;
+    color-scheme: light !important;
 }
 
-/* Background gradient */
+/* Global layout */
+html, body, [class*="st-"] {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+/* Clean white app background */
 .stApp {
-    background: linear-gradient(135deg, #ffffff 0%, #f6f8fb 100%) !important;
+    background: linear-gradient(135deg, #ffffff 0%, #f9fbff 100%) !important;
 }
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background-color: #f4f6fb !important;
-    border-right: 1px solid #e0e6ef !important;
+    background-color: #f7f9fc !important;
+    border-right: 1px solid #e3e8ef !important;
 }
 section[data-testid="stSidebar"] * {
-    color: #111111 !important;
+    color: #111 !important;
 }
 
 /* File uploader */
@@ -51,16 +58,11 @@ section[data-testid="stSidebar"] * {
     border: 2px dashed #007aff !important;
     border-radius: 12px !important;
     color: #111111 !important;
-    padding: 1.5rem !important;
+    padding: 1.2rem !important;
 }
 [data-testid="stFileUploader"] section:hover {
     border-color: #3399ff !important;
-}
-
-/* Headings */
-h1, h2, h3, h4 {
-    color: #000000 !important;
-    font-weight: 700;
+    background-color: #f5f9ff !important;
 }
 
 /* Buttons */
@@ -69,7 +71,7 @@ h1, h2, h3, h4 {
     color: white !important;
     font-weight: 600 !important;
     border-radius: 10px !important;
-    padding: 0.7rem 1.5rem !important;
+    padding: 0.6rem 1.2rem !important;
     border: none !important;
     transition: 0.2s ease;
 }
@@ -78,36 +80,34 @@ h1, h2, h3, h4 {
     transform: scale(1.03);
 }
 
-/* Text area */
+/* Text Area */
 textarea {
     background-color: #ffffff !important;
     color: #111111 !important;
-    border: 1px solid #d3d8e0 !important;
+    border: 1px solid #cfd6e3 !important;
     border-radius: 10px !important;
     padding: 10px !important;
 }
 
-/* Expander */
-.stExpander {
+/* Alerts, expanders, text boxes */
+.stAlert, .stExpander {
     background-color: #ffffff !important;
-    color: #111111 !important;
-    border: 1px solid #e2e6ed !important;
-    border-radius: 12px !important;
-    padding: 1rem !important;
-}
-
-/* Info, warning, success boxes */
-.stAlert {
+    border: 1px solid #e3e8ef !important;
     border-radius: 10px !important;
-    border: 1px solid #e0e6ef !important;
-    background-color: #f8faff !important;
-    color: #111111 !important;
+    color: #111 !important;
 }
 
-/* Hide default footer and menu */
+/* Headings */
+h1, h2, h3, h4, h5 {
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+/* Hide Streamlit branding */
 #MainMenu, footer, header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
+
 
 # ===========================
 # 🧭 SIDEBAR
