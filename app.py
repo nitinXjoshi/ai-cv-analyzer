@@ -182,7 +182,7 @@ if uploaded_file is not None:
                 - Technical impression
                 - Soft skill evaluation
                 - Overall suitability rating (out of 10)
-                Format the output professionally in bullet points. Do not give asterick in response.
+                Format the output professionally in bullet points. Do not give asterick in response. Give the overall sustainability score in bold.
 
                 CV:
                 {text}
