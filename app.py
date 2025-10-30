@@ -20,46 +20,46 @@ st.set_page_config(
 )
 
 # ===========================
-# 🎨 PREMIUM BLACK-BLUE THEME WITH LEGIBLE TEXT
+# 🎨 LIGHT THEME (Apple-like, White + Blue Palette)
 # ===========================
 st.markdown("""
 <style>
-/* Global app background */
+/* App background */
 .stApp {
-    background: linear-gradient(135deg, #000000 0%, #0a0a23 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%);
     font-family: 'Segoe UI', sans-serif;
-    color: #f5f5f5;
+    color: #111111;
 }
 
-/* Sidebar styling */
+/* Sidebar */
 section[data-testid="stSidebar"] {
-    background-color: #0d0d2a;
-    color: #ffffff;
-    border-right: 1px solid rgba(255,255,255,0.1);
+    background-color: #f1f4fa;
+    color: #000000;
+    border-right: 1px solid #d8dee9;
 }
 section[data-testid="stSidebar"] h2,
 section[data-testid="stSidebar"] p,
 section[data-testid="stSidebar"] div {
-    color: #ffffff !important;
+    color: #000000 !important;
 }
 
 /* Headings */
 h1, h2, h3 {
-    color: #ffffff !important;
+    color: #000000 !important;
     font-weight: 700;
 }
 
 /* General text and markdown */
 p, label, .stMarkdown, .stText, div, span {
-    color: #f5f5f5 !important;
+    color: #222222 !important;
 }
 
 /* Card containers */
 div[data-testid="stVerticalBlock"] {
-    background: #1a1a40;
+    background: #ffffff;
     border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 25px rgba(0,0,0,0.08);
     margin-top: 1.5rem;
 }
 
@@ -81,22 +81,23 @@ div[data-testid="stVerticalBlock"] {
 /* Text area */
 textarea {
     border-radius: 10px !important;
-    border: 1px solid #666;
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    border: 1px solid #d1d1d1;
+    background-color: #fdfdfd !important;
+    color: #111111 !important;
 }
 
 /* Expander (Preview box) */
 .stExpander {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    background-color: #f9f9f9 !important;
+    color: #111111 !important;
 }
 
 /* Alerts and info boxes */
 .stAlert {
     border-radius: 10px;
-    color: #000000 !important;
-    background-color: #f5f5f5 !important;
+    color: #111111 !important;
+    background-color: #eaf2ff !important;
+    border: 1px solid #d1e0ff;
 }
 
 /* Hide footer/menu */
@@ -118,7 +119,7 @@ st.sidebar.caption("Made with ❤️ by HireSight")
 # 🧩 HEADER
 # ===========================
 st.markdown("<h1 style='text-align:center;'>🤖 HireSight CV Analyzer (Groq-Powered)</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align:center; color:#cccccc;'>Upload your CV and receive instant AI feedback for your job readiness.</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align:center; color:#555;'>Upload your CV and receive instant AI feedback for your job readiness.</h3>", unsafe_allow_html=True)
 
 # ===========================
 # 🔍 API CHECK
@@ -195,7 +196,7 @@ if uploaded_file is not None:
 
                     st.subheader("🧾 AI Evaluation Report")
                     st.markdown("---")
-                    st.markdown(f"<div style='color:#ffffff;'>{answer.replace('**', '')}</div>", unsafe_allow_html=True)
+                    st.markdown(f"<div style='color:#111111;'>{answer.replace('**', '')}</div>", unsafe_allow_html=True)
                     st.markdown("---")
 
                     st.success("✅ Analysis complete!")
