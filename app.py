@@ -20,42 +20,43 @@ st.set_page_config(
 )
 
 # ===========================
-# 🎨 CUSTOM STYLING (Fixed for Readability)
+# 🎨 PREMIUM BLACK-BLUE THEME WITH LEGIBLE TEXT
 # ===========================
 st.markdown("""
 <style>
-/* App background (black-blue gradient) */
+/* Global app background */
 .stApp {
     background: linear-gradient(135deg, #000000 0%, #0a0a23 100%);
     font-family: 'Segoe UI', sans-serif;
-    color: #111111;
+    color: #f5f5f5;
 }
 
-/* Sidebar */
+/* Sidebar styling */
 section[data-testid="stSidebar"] {
-    background-color: #111122;
+    background-color: #0d0d2a;
     color: #ffffff;
-    padding-top: 2rem;
     border-right: 1px solid rgba(255,255,255,0.1);
 }
-section[data-testid="stSidebar"] h2 {
-    color: #ffffff;
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] div {
+    color: #ffffff !important;
 }
 
 /* Headings */
 h1, h2, h3 {
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: 700;
 }
 
-/* Subtext / paragraphs */
+/* General text and markdown */
 p, label, .stMarkdown, .stText, div, span {
-    color: #111111;
+    color: #f5f5f5 !important;
 }
 
 /* Card containers */
 div[data-testid="stVerticalBlock"] {
-    background: #ffffff;
+    background: #1a1a40;
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 4px 25px rgba(0,0,0,0.3);
@@ -64,7 +65,7 @@ div[data-testid="stVerticalBlock"] {
 
 /* Buttons */
 .stButton>button {
-    background-color: #0a0a23;
+    background: #007aff;
     color: #ffffff;
     border-radius: 10px;
     font-weight: 600;
@@ -73,36 +74,32 @@ div[data-testid="stVerticalBlock"] {
     border: none;
 }
 .stButton>button:hover {
-    background-color: #1b1b4a;
+    background: #3399ff;
     transform: scale(1.03);
 }
 
 /* Text area */
 textarea {
     border-radius: 10px !important;
-    border: 1px solid #444;
-    background-color: #f9f9f9;
-    color: #000 !important;
+    border: 1px solid #666;
+    background-color: #ffffff !important;
+    color: #000000 !important;
 }
 
-/* Alerts */
-.stAlert {
-    border-radius: 10px;
-    font-size: 0.95rem;
-}
-
-/* Info boxes and text contrast */
+/* Expander (Preview box) */
 .stExpander {
     background-color: #ffffff !important;
-    color: #111111 !important;
+    color: #000000 !important;
 }
 
-/* Sidebar tip text */
-.stSidebar .stMarkdown, .stSidebar p, .stSidebar div {
-    color: #e0e0e0 !important;
+/* Alerts and info boxes */
+.stAlert {
+    border-radius: 10px;
+    color: #000000 !important;
+    background-color: #f5f5f5 !important;
 }
 
-/* Footer and Streamlit menu */
+/* Hide footer/menu */
 #MainMenu, footer, header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
@@ -198,7 +195,7 @@ if uploaded_file is not None:
 
                     st.subheader("🧾 AI Evaluation Report")
                     st.markdown("---")
-                    st.markdown(f"<div style='color:#111111;'>{answer.replace('**', '')}</div>", unsafe_allow_html=True)
+                    st.markdown(f"<div style='color:#ffffff;'>{answer.replace('**', '')}</div>", unsafe_allow_html=True)
                     st.markdown("---")
 
                     st.success("✅ Analysis complete!")
