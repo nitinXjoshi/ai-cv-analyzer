@@ -1,4 +1,5 @@
 import os
+import re
 import streamlit as st
 import pdfplumber
 from dotenv import load_dotenv
@@ -24,21 +25,18 @@ st.set_page_config(
 # ===========================
 st.markdown("""
 <style>
-/* Force Light Mode */
 :root, html, body, [class*="st-"] {
     --background-color: #ffffff !important;
     --text-color: #111111 !important;
     color-scheme: light !important;
 }
 
-/* Global layout */
 html, body, [class*="st-"] {
     font-family: "Inter", "Segoe UI", sans-serif;
     color: var(--text-color);
     background-color: var(--background-color);
 }
 
-/* Clean white app background */
 .stApp {
     background: linear-gradient(135deg, #ffffff 0%, #f9fbff 100%) !important;
 }
@@ -107,7 +105,6 @@ h1, h2, h3, h4, h5 {
 #MainMenu, footer, header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
-
 
 # ===========================
 # 🧭 SIDEBAR
@@ -198,11 +195,40 @@ if uploaded_file is not None:
                     answer = response.choices[0].message.content
                     st.balloons()
 
+                    # ===========================
+                    # 🧾 AI EVALUATION REPORT (Beautiful Formatting)
+                    # ===========================
                     st.subheader("🧾 AI Evaluation Report")
                     st.markdown("---")
-                    st.markdown(f"<div style='color:#111111; font-size:16px; line-height:1.6;'>{answer.replace('**', '')}</div>", unsafe_allow_html=True)
-                    st.markdown("---")
 
+                    formatted_answer = re.sub(
+                        r"(?i)(strengths|weaknesses|technical impression|soft skill evaluation|overall suitability rating.*?)\s*:",
+                        lambda m: f"<h4 style='color:#007aff; margin-top:1rem;'>{m.group(1).title()}:</h4>",
+                        answer
+                    )
+
+                    formatted_answer = (
+                        formatted_answer
+                        .replace("•", "👉")
+                        .replace("-", "•")
+                        .replace("\n", "<br>")
+                    )
+
+                    st.markdown(f"""
+                    <div style='
+                        background-color:#ffffff;
+                        border:1px solid #e0e6ef;
+                        border-radius:12px;
+                        padding:1.5rem;
+                        line-height:1.7;
+                        font-size:16px;
+                        color:#111111;
+                    '>
+                    {formatted_answer}
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                    st.markdown("---")
                     st.success("✅ Analysis complete!")
 
                 except Exception as e:
