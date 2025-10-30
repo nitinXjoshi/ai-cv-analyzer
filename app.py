@@ -16,7 +16,7 @@ api_key = os.getenv("GROQ_API_KEY")
 # ===========================
 st.set_page_config(
     page_title="HireSight CV Analyzer",
-    page_icon="🤖",
+    page_icon="👥",
     layout="wide",
 )
 
@@ -114,13 +114,13 @@ st.sidebar.write("Use this sidebar to navigate.")
 st.sidebar.markdown("---")
 st.sidebar.info("💡 Upload your CV in PDF format and click **Analyze CV** to get instant AI-powered feedback.")
 st.sidebar.markdown("---")
-st.sidebar.caption("Made with ❤️ by HireSight")
+st.sidebar.caption("Made with ❤️ by Team CodeStuds")
 
 # ===========================
 # 🧩 HEADER
 # ===========================
-st.markdown("<h1 style='text-align:center;'>🤖 HireSight CV Analyzer (Groq-Powered)</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align:center; color:#333;'>Upload your CV and receive instant AI feedback for job readiness.</h3>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center;'>HireSight Resume Analyzer (Groq-Powered)</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align:center; color:#333;'>Upload Resume.</h3>", unsafe_allow_html=True)
 
 # ===========================
 # 🔍 API CHECK
@@ -182,7 +182,7 @@ if uploaded_file is not None:
                 - Technical impression
                 - Soft skill evaluation
                 - Overall suitability rating (out of 10)
-                Format the output professionally in bullet points.
+                Format the output professionally in bullet points with points out of 10 in bold and in the same line as its heading.
 
                 CV:
                 {text}
