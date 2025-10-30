@@ -15,58 +15,150 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- PREMIUM DARK UI STYLING ---
+# --- CUSTOM STYLING (black-white professional look) ---
 st.markdown("""
     <style>
-        /* Overall page */
+        /* Main background and font */
         body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Poppins', sans-serif;
         }
 
+        /* Center content and add card effect */
         .block-container {
             max-width: 850px;
             margin: auto;
             padding: 3rem 3rem;
-            background-color: transparent;
+            background-color: #ffffff;
         }
 
         /* Header */
         h1 {
             text-align: center;
-            color: #f5f5f7;
+            color: #000000;
             font-weight: 700;
-            font-size: 2.3rem;
+            font-size: 2.2rem;
             letter-spacing: -0.5px;
-            margin-bottom: 0.5rem;
         }
 
-        p {
-            text-align: center;
-            color: #a0a0a0;
+        p, label, textarea, .stTextInput, .stFileUploader label {
+            color: #111111 !important;
             font-size: 1rem;
-            margin-top: 0rem;
-            margin-bottom: 2rem;
         }
 
-        /* Blue-glass containers */
-        .card {
-            background: linear-gradient(145deg, #0a0f1a, #0d1625);
-            border: 1px solid #1e3a8a;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* File uploader */
+        /* File uploader area */
         .stFileUploader {
-            background-color: rgba(30, 64, 175, 0.15);
-            border: 1px solid #1e3a8a;
-            border-radius: 12px;
+            background-color: #fafafa;
+            border: 1px solid #000;
+            border-radius: 10px;
             padding: 1rem;
         }
 
         /* Button styling */
-        .stButton>but
+        .stButton>button {
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.7rem 1.3rem;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        .stButton>button:hover {
+            background-color: #333333;
+            transform: scale(1.03);
+        }
+
+        /* Textarea */
+        .stTextArea textarea {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* Info and success boxes */
+        .stAlert {
+            border-radius: 8px !important;
+            font-size: 0.95rem;
+        }
+
+        /* Result card */
+        .result-box {
+            background-color: #f9f9f9;
+            border: 1px solid #000;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            color: #000000;
+        }
+
+        /* Divider */
+        hr {
+            border: 1px solid #000000;
+            margin: 1.5rem 0;
+        }
+
+        /* Hide Streamlit default menu and footer for clean look */
+        #MainMenu, footer, header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
+# --- HEADER ---
+st.markdown("<h1>🤖 AI CV Analyzer (Groq)</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#555;'>Upload your CV (PDF) and get instant AI-powered evaluation with Groq LLM</p>", unsafe_allow_html=True)
+st.markdown("<hr>", unsafe_allow_html=True)
+
+# --- BACKEND LOGIC (unchanged) ---
+if not api_key:
+    st.error("❌ GROQ_API_KEY not found. Please add it in Streamlit Secrets.")
+else:
+    client = Groq(api_key=api_key)
+
+    uploaded_file = st.file_uploader("📄 Upload your CV (PDF only)", type=["pdf"])
+
+    if uploaded_file is not None:
+        text = ""
+        try:
+            with pdfplumber.open(uploaded_file) as pdf:
+                for page in pdf.pages:
+                    text += page.extract_text() or ""
+        except Exception as e:
+            st.error(f"❌ Error reading PDF: {e}")
+
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.subheader("🧾 Extracted CV Text (Preview)")
+        st.text_area(
+            "CV Text",
+            text[:2000] + ("..." if len(text) > 2000 else ""),
+            height=200
+        )
+
+        st.markdown("<hr>", unsafe_allow_html=True)
+
+        if st.button("🚀 Analyze CV"):
+            st.info("Analyzing your CV... please wait ⏳")
+
+            prompt = f"""
+            You are an expert HR recruiter. Evaluate this candidate’s CV for a software engineering role.
+            Mention strengths, weaknesses, and rate suitability out of 10.
+            CV text:
+            {text}
+            """
+
+            try:
+                response = client.chat.completions.create(
+                    model="llama-3.3-70b-versatile",
+                    messages=[{"role": "user", "content": prompt}],
+                )
+                answer = response.choices[0].message.content
+
+                st.success("✅ Analysis complete!")
+                st.subheader("🧠 AI Evaluation")
+                st.markdown(f"<div class='result-box'>{answer}</div>", unsafe_allow_html=True)
+
+            except Exception as e:
+                st.error(f"Groq API Error: {e}")
