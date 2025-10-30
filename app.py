@@ -15,85 +15,90 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- CUSTOM STYLING (black-white professional look) ---
+# --- CUSTOM STYLING (Black outer + White container) ---
 st.markdown("""
     <style>
-        /* Main background and font */
+        /* Global background and typography */
         body {
-            background-color: #ffffff;
+            background-color: #000000;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Poppins', sans-serif;
             color: #000000;
-            font-family: 'Poppins', sans-serif;
         }
 
-        /* Center content and add card effect */
+        /* White centered container with subtle shadow */
         .block-container {
-            max-width: 850px;
-            margin: auto;
-            padding: 3rem 3rem;
             background-color: #ffffff;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 850px;
+            margin: 3rem auto;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.05), 0 0 80px rgba(0, 0, 0, 0.3);
         }
 
-        /* Header */
+        /* Header styling */
         h1 {
             text-align: center;
             color: #000000;
             font-weight: 700;
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             letter-spacing: -0.5px;
         }
 
         p, label, textarea, .stTextInput, .stFileUploader label {
-            color: #111111 !important;
+            color: #000000 !important;
             font-size: 1rem;
         }
 
-        /* File uploader area */
+        /* File uploader */
         .stFileUploader {
-            background-color: #fafafa;
-            border: 1px solid #000;
-            border-radius: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #000000;
+            border-radius: 12px;
             padding: 1rem;
         }
 
-        /* Button styling */
+        /* Text area */
+        .stTextArea textarea {
+            background-color: #ffffff;
+            color: #000000 !important;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        /* Buttons - clean black & white */
         .stButton>button {
             background-color: #000000;
             color: #ffffff;
             border: none;
-            border-radius: 8px;
-            padding: 0.7rem 1.3rem;
+            border-radius: 10px;
+            padding: 0.75rem 1.6rem;
             font-weight: 600;
             font-size: 1rem;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+
         .stButton>button:hover {
             background-color: #333333;
-            transform: scale(1.03);
+            transform: translateY(-2px);
         }
 
-        /* Textarea */
-        .stTextArea textarea {
-            background-color: #ffffff;
-            color: #000000;
-            border: 1px solid #000;
-            border-radius: 8px;
-            font-size: 0.95rem;
-        }
-
-        /* Info and success boxes */
+        /* Info & success alerts */
         .stAlert {
-            border-radius: 8px !important;
+            border-radius: 10px !important;
             font-size: 0.95rem;
         }
 
-        /* Result card */
+        /* Result box */
         .result-box {
-            background-color: #f9f9f9;
-            border: 1px solid #000;
-            border-radius: 12px;
+            background-color: #ffffff;
+            border: 1.5px solid #000000;
+            border-radius: 16px;
             padding: 1.5rem;
             margin-top: 1rem;
             color: #000000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
         /* Divider */
@@ -102,14 +107,14 @@ st.markdown("""
             margin: 1.5rem 0;
         }
 
-        /* Hide Streamlit default menu and footer for clean look */
+        /* Hide Streamlit branding */
         #MainMenu, footer, header {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
 
 # --- HEADER ---
 st.markdown("<h1>🤖 AI CV Analyzer (Groq)</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; color:#555;'>Upload your CV (PDF) and get instant AI-powered evaluation with Groq LLM</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#111;'>Upload your CV (PDF) and get instant AI-powered evaluation with Groq LLM</p>", unsafe_allow_html=True)
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # --- BACKEND LOGIC (unchanged) ---
