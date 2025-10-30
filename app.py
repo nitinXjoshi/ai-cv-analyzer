@@ -20,87 +20,91 @@ st.set_page_config(
 )
 
 # ===========================
-# 🎨 LIGHT THEME (Apple-like, White + Blue Palette)
+# 🎨 CUSTOM LIGHT THEME (Apple / Notion Style)
 # ===========================
 st.markdown("""
 <style>
-/* App background */
+/* Global font and layout */
+html, body, [class*="st-"] {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    color: #111111 !important;
+    background-color: #ffffff !important;
+}
+
+/* Background gradient */
 .stApp {
-    background: linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%);
-    font-family: 'Segoe UI', sans-serif;
-    color: #111111;
+    background: linear-gradient(135deg, #ffffff 0%, #f6f8fb 100%) !important;
 }
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background-color: #f1f4fa;
-    color: #000000;
-    border-right: 1px solid #d8dee9;
+    background-color: #f4f6fb !important;
+    border-right: 1px solid #e0e6ef !important;
 }
-section[data-testid="stSidebar"] h2,
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] div {
-    color: #000000 !important;
+section[data-testid="stSidebar"] * {
+    color: #111111 !important;
+}
+
+/* File uploader */
+[data-testid="stFileUploader"] section {
+    background-color: #ffffff !important;
+    border: 2px dashed #007aff !important;
+    border-radius: 12px !important;
+    color: #111111 !important;
+    padding: 1.5rem !important;
+}
+[data-testid="stFileUploader"] section:hover {
+    border-color: #3399ff !important;
 }
 
 /* Headings */
-h1, h2, h3 {
+h1, h2, h3, h4 {
     color: #000000 !important;
     font-weight: 700;
 }
 
-/* General text and markdown */
-p, label, .stMarkdown, .stText, div, span {
-    color: #222222 !important;
-}
-
-/* Card containers */
-div[data-testid="stVerticalBlock"] {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.08);
-    margin-top: 1.5rem;
-}
-
 /* Buttons */
 .stButton>button {
-    background: #007aff;
-    color: #ffffff;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: 0.2s;
-    padding: 0.7rem 1.5rem;
-    border: none;
+    background-color: #007aff !important;
+    color: white !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    padding: 0.7rem 1.5rem !important;
+    border: none !important;
+    transition: 0.2s ease;
 }
 .stButton>button:hover {
-    background: #3399ff;
+    background-color: #3399ff !important;
     transform: scale(1.03);
 }
 
 /* Text area */
 textarea {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    border: 1px solid #d3d8e0 !important;
     border-radius: 10px !important;
-    border: 1px solid #d1d1d1;
-    background-color: #fdfdfd !important;
-    color: #111111 !important;
+    padding: 10px !important;
 }
 
-/* Expander (Preview box) */
+/* Expander */
 .stExpander {
-    background-color: #f9f9f9 !important;
+    background-color: #ffffff !important;
     color: #111111 !important;
+    border: 1px solid #e2e6ed !important;
+    border-radius: 12px !important;
+    padding: 1rem !important;
 }
 
-/* Alerts and info boxes */
+/* Info, warning, success boxes */
 .stAlert {
-    border-radius: 10px;
+    border-radius: 10px !important;
+    border: 1px solid #e0e6ef !important;
+    background-color: #f8faff !important;
     color: #111111 !important;
-    background-color: #eaf2ff !important;
-    border: 1px solid #d1e0ff;
 }
 
-/* Hide footer/menu */
+/* Hide default footer and menu */
 #MainMenu, footer, header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
@@ -111,7 +115,7 @@ textarea {
 st.sidebar.title("⚙️ Control Panel")
 st.sidebar.write("Use this sidebar to navigate.")
 st.sidebar.markdown("---")
-st.sidebar.info("💡 Tip: Upload your CV in PDF format and click **Analyze CV** to get AI-powered evaluation.")
+st.sidebar.info("💡 Upload your CV in PDF format and click **Analyze CV** to get instant AI-powered feedback.")
 st.sidebar.markdown("---")
 st.sidebar.caption("Made with ❤️ by HireSight")
 
@@ -119,7 +123,7 @@ st.sidebar.caption("Made with ❤️ by HireSight")
 # 🧩 HEADER
 # ===========================
 st.markdown("<h1 style='text-align:center;'>🤖 HireSight CV Analyzer (Groq-Powered)</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align:center; color:#555;'>Upload your CV and receive instant AI feedback for your job readiness.</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align:center; color:#333;'>Upload your CV and receive instant AI feedback for job readiness.</h3>", unsafe_allow_html=True)
 
 # ===========================
 # 🔍 API CHECK
@@ -196,13 +200,12 @@ if uploaded_file is not None:
 
                     st.subheader("🧾 AI Evaluation Report")
                     st.markdown("---")
-                    st.markdown(f"<div style='color:#111111;'>{answer.replace('**', '')}</div>", unsafe_allow_html=True)
+                    st.markdown(f"<div style='color:#111111; font-size:16px; line-height:1.6;'>{answer.replace('**', '')}</div>", unsafe_allow_html=True)
                     st.markdown("---")
 
                     st.success("✅ Analysis complete!")
 
                 except Exception as e:
                     st.error(f"Groq API Error: {e}")
-
 else:
     st.info("⬆️ Please upload a PDF resume to begin.")
